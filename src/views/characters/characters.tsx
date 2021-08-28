@@ -1,41 +1,33 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import { useInfiniteQuery } from 'react-query';
 
-import { ICharacter } from '.';
+import { IGetCharacterResponse } from '.';
 import CharacterCard from '../../components/character-card';
 import { get } from '../../services/httpService';
 
 export default function Characters() {
-  const [page, setPage] = useState(0);
-  const [characters, setCharacters] = useState<ICharacter[]>([]);
   const loaderRef = useRef<HTMLDivElement>(null);
 
-  const fetchCharacters = useCallback(
-    (str?: string) => {
-      get('https://gateway.marvel.com/v1/public/characters', {
-        offset: page * 12,
-        limit: 12,
-      }).then((response) =>
-        setCharacters((prevCharacters) => {
-          if (str) {
-            return response.data.results;
-          }
-          return [...prevCharacters, ...response.data.results];
-        }),
-      );
+  const getCharacters = ({ pageParam = 0 }) =>
+    get('https://gateway.marvel.com/v1/public/characters', {
+      offset: pageParam,
+      limit: 40,
+    });
+
+  const { data, error, isLoading, fetchNextPage } =
+    useInfiniteQuery<IGetCharacterResponse>('getCharacters', getCharacters, {
+      getNextPageParam: (lastPage) => lastPage.data.offset + 12,
+    });
+
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        fetchNextPage();
+      }
     },
-    [page],
+    [fetchNextPage],
   );
-
-  useEffect(() => {
-    fetchCharacters();
-  }, [fetchCharacters]);
-
-  const handleObserver = useCallback((entries) => {
-    const target = entries[0];
-    if (target.isIntersecting) {
-      setPage((prev) => prev + 1);
-    }
-  }, []);
 
   useEffect(() => {
     const option = {
@@ -64,25 +56,43 @@ export default function Characters() {
         <h2>Characters</h2>
         <input type="search" />
       </header>
-      <main
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          rowGap: '20px',
-        }}
-      >
-        {characters.map((character, index) => {
-          return (
-            <CharacterCard
-              key={`${character.id} + ${index}`}
-              character={character}
-            />
-          );
-        })}
-      </main>
+      {error ? (
+        <div>{JSON.stringify(error)}</div>
+      ) : isLoading ? (
+        <div>Loading Data...</div>
+      ) : (
+        <main
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+          }}
+        >
+          {data?.pages.map((page) => {
+            return page.data.results.map((character, index) => {
+              return (
+                <CharacterCard
+                  key={`${character.id} + ${index}`}
+                  character={character}
+                />
+              );
+            });
+          })}
+        </main>
+      )}
       <div ref={loaderRef} style={{ textAlign: 'center' }}>
-        Loading...
+        Loading More Data...
       </div>
+      <footer
+        style={{
+          position: 'fixed',
+          backgroundColor: '#fff',
+          bottom: 0,
+          right: 0,
+        }}
+        dangerouslySetInnerHTML={{
+          __html: data?.pages[0].attributionHTML || '',
+        }}
+      />
     </>
   );
 }
