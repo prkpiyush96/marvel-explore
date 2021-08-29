@@ -1,33 +1,61 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { useInfiniteQuery } from 'react-query';
+import {
+  KeyboardEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useInfiniteQuery, useQueryClient } from 'react-query';
 
 import { IGetCharacterResponse } from '.';
 import CharacterCard from '../../components/character-card';
 import { get } from '../../services/httpService';
 
+const limit = 30;
+
 export default function Characters() {
+  const queryClient = useQueryClient();
   const loaderRef = useRef<HTMLDivElement>(null);
+  const [search, setSearch] = useState('');
 
-  const getCharacters = ({ pageParam = 0 }) =>
-    get('https://gateway.marvel.com/v1/public/characters', {
-      offset: pageParam,
-      limit: 40,
-    });
+  const getCharacters = useCallback(
+    ({ pageParam = 0 }) =>
+      get('https://gateway.marvel.com/v1/public/characters', {
+        offset: pageParam,
+        limit: limit,
+        nameStartsWith: search ? search : undefined,
+      }),
+    [search],
+  );
 
-  const { data, error, isLoading, fetchNextPage } =
+  const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery<IGetCharacterResponse>('getCharacters', getCharacters, {
-      getNextPageParam: (lastPage) => lastPage.data.offset + 12,
+      getNextPageParam: (lastPage) => {
+        if (
+          lastPage.data.offset > lastPage.data.total ||
+          lastPage.data.limit > lastPage.data.total
+        ) {
+          return undefined;
+        }
+        return lastPage.data.offset + limit;
+      },
     });
 
   const handleObserver = useCallback(
     (entries) => {
-      const target = entries[0];
-      if (target.isIntersecting) {
-        fetchNextPage();
+      if (hasNextPage) {
+        const target = entries[0];
+        if (target.isIntersecting) {
+          fetchNextPage();
+        }
       }
     },
-    [fetchNextPage],
+    [fetchNextPage, hasNextPage],
   );
+
+  const handleSearch: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.code === 'Enter') setSearch(e.currentTarget.value);
+  };
 
   useEffect(() => {
     const option = {
@@ -38,6 +66,15 @@ export default function Characters() {
     const observer = new IntersectionObserver(handleObserver, option);
     if (loaderRef.current) observer.observe(loaderRef.current);
   }, [handleObserver]);
+
+  useEffect(() => {
+    fetchNextPage({ pageParam: 0 }).then((res) => {
+      queryClient.setQueryData('getCharacters', () => ({
+        pages: [res.data?.pages[res.data?.pages.length - 1]],
+        pageParams: res.data?.pageParams[res.data?.pageParams.length - 1],
+      }));
+    });
+  }, [fetchNextPage, queryClient, search]);
 
   return (
     <>
@@ -54,7 +91,11 @@ export default function Characters() {
         }}
       >
         <h2>Characters</h2>
-        <input type="search" />
+        <input
+          type="search"
+          onKeyPress={handleSearch}
+          placeholder="press enter to search"
+        />
       </header>
       {error ? (
         <div>{JSON.stringify(error)}</div>
@@ -80,7 +121,7 @@ export default function Characters() {
         </main>
       )}
       <div ref={loaderRef} style={{ textAlign: 'center' }}>
-        Loading More Data...
+        {hasNextPage ? 'Loading More Data...' : ''}
       </div>
       <footer
         style={{
