@@ -2,6 +2,7 @@
   "name": "marvel-explore",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://prkpiyush96.github.io/marvel-explore",
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -21,7 +22,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +49,7 @@
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",
     "autoprefixer": "^9.8.6",
+    "gh-pages": "^3.2.3",
     "postcss": "^7.0.36",
     "prettier": "^2.3.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"
