@@ -9,39 +9,39 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="tw-bg-primaryRed tw-p-2 tw-min-h-screen">
+    <aside className="bg-primaryRed fixed p-2 min-h-screen">
       <div
-        className="tw-px-20 tw-py-4 tw-text-white tw-cursor-pointer"
+        className="px-20 py-4 text-white cursor-pointer"
         onClick={() => handleClick(APP_ROUTES.characters)}
       >
         Characters
       </div>
       <div
-        className="tw-px-20 tw-py-4 tw-text-white tw-cursor-pointer"
+        className="px-20 py-4 text-white cursor-pointer"
         onClick={() => handleClick('test')}
       >
         Comics
       </div>
       <div
-        className="tw-px-20 tw-py-4 tw-text-white tw-cursor-pointer"
+        className="px-20 py-4 text-white cursor-pointer"
         onClick={() => handleClick('test')}
       >
         Creators
       </div>
       <div
-        className="tw-px-20 tw-py-4 tw-text-white tw-cursor-pointer"
+        className="px-20 py-4 text-white cursor-pointer"
         onClick={() => handleClick('test')}
       >
         Events
       </div>
       <div
-        className="tw-px-20 tw-py-4 tw-text-white tw-cursor-pointer"
+        className="px-20 py-4 text-white cursor-pointer"
         onClick={() => handleClick('test')}
       >
         Series
       </div>
       <div
-        className="tw-px-20 tw-py-4 tw-text-white tw-cursor-pointer"
+        className="px-20 py-4 text-white cursor-pointer"
         onClick={() => handleClick('test')}
       >
         Stories

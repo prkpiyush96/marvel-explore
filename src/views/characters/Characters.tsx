@@ -88,9 +88,9 @@ export default function Characters() {
             type="search"
             onKeyPress={handleSearch}
             placeholder="press enter to search"
-            className="tw-mx-8 tw-my-2 tw-float-right tw-w-40 tw-p-2 tw-border tw-border-black tw-border-solid"
+            className="mx-8 my-2 float-right w-40 p-2 border border-black border-solid"
           />
-          <article className="tw-m-8 tw-flex tw-flex-wrap tw-gap-x-4 tw-gap-y-4 tw-clear-both">
+          <article className="m-8 flex flex-wrap gap-x-4 gap-y-4 clear-both">
             {data?.pages.map((page) => {
               return page.data.results.map((character, index) => {
                 return (
