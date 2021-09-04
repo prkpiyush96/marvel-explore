@@ -1,13 +1,29 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Marvel';
+  font-weight: normal;
+  src: url(./assets/fonts/Marvel-Regular.ttf);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: 'Marvel';
+  font-weight: bold;
+  src: url(./assets/fonts/Marvel-Bold.ttf);
+}
+
+@font-face {
+  font-family: 'Marvel';
+  font-weight: normal;
+  font-style: italic;
+  src: url(./assets/fonts/Marvel-Italic.ttf);
+}
+
+@font-face {
+  font-family: 'Marvel';
+  font-weight: bold;
+  font-style: italic;
+  src: url(./assets/fonts/Marvel-BoldItalic.ttf);
 }

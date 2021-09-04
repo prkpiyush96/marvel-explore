@@ -4,4 +4,4 @@ export interface ICharacterCardProps {
   character: ICharacter;
 }
 
-export { default } from './characterCard';
+export { default } from './CharacterCard';

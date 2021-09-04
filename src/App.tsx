@@ -1,6 +1,9 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Characters from './views/characters';
+import Layout from './components/Layout';
+import Routes from './routes';
+import { APP_ROUTES } from './utils/constants';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,11 +18,20 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="App">
-        <Characters />
-      </div>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <Layout>
+        <Switch>
+          <Route exact path="/">
+            <Redirect to={APP_ROUTES.characters} />
+          </Route>
+          <QueryClientProvider client={queryClient}>
+            {Routes.map((route) => (
+              <Route key={route.name} path={route.path} component={route.component} />
+            ))}
+          </QueryClientProvider>
+        </Switch>
+      </Layout>
+    </BrowserRouter>
   );
 }
 

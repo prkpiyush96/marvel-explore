@@ -29,4 +29,4 @@ export interface ICharacter {
   series: Array<IResourceObject>;
 }
 
-export { default } from './characters';
+export { default } from './Characters';

@@ -11,7 +11,7 @@ import { IGetCharacterResponse } from '.';
 import CharacterCard from '../../components/character-card';
 import { get } from '../../services/httpService';
 
-const limit = 30;
+const limit = 32;
 
 export default function Characters() {
   const queryClient = useQueryClient();
@@ -77,63 +77,36 @@ export default function Characters() {
   }, [fetchNextPage, queryClient, search]);
 
   return (
-    <>
-      <header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1,
-          backgroundColor: '#fff',
-          height: '40px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <h2>Characters</h2>
-        <input
-          type="search"
-          onKeyPress={handleSearch}
-          placeholder="press enter to search"
-        />
-      </header>
+    <div>
       {error ? (
         <div>{JSON.stringify(error)}</div>
       ) : isLoading ? (
         <div>Loading Data...</div>
       ) : (
-        <main
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-          }}
-        >
-          {data?.pages.map((page) => {
-            return page.data.results.map((character, index) => {
-              return (
-                <CharacterCard
-                  key={`${character.id} + ${index}`}
-                  character={character}
-                />
-              );
-            });
-          })}
-        </main>
+        <>
+          <input
+            type="search"
+            onKeyPress={handleSearch}
+            placeholder="press enter to search"
+            className="tw-mx-8 tw-my-2 tw-float-right tw-w-40 tw-p-2 tw-border tw-border-black tw-border-solid"
+          />
+          <article className="tw-m-8 tw-flex tw-flex-wrap tw-gap-x-4 tw-gap-y-4 tw-clear-both">
+            {data?.pages.map((page) => {
+              return page.data.results.map((character, index) => {
+                return (
+                  <CharacterCard
+                    key={`${character.id} + ${index}`}
+                    character={character}
+                  />
+                );
+              });
+            })}
+          </article>
+        </>
       )}
       <div ref={loaderRef} style={{ textAlign: 'center' }}>
         {hasNextPage ? 'Loading More Data...' : ''}
       </div>
-      <footer
-        style={{
-          position: 'fixed',
-          backgroundColor: '#fff',
-          bottom: 0,
-          right: 0,
-        }}
-        dangerouslySetInnerHTML={{
-          __html: data?.pages[0].attributionHTML || '',
-        }}
-      />
-    </>
+    </div>
   );
 }
