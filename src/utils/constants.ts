@@ -25,9 +25,9 @@ export const landscapeImageVariants = {
   incredible: 'landscape_incredible',
 };
 export const APP_ROUTES = {
-  characters: '/characters'
-}
+  characters: '/characters',
+};
 
 export const SIDEBAR_LABELS = {
-  characters: "Characters"  
-}
+  characters: 'Characters',
+};

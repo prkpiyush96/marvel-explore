@@ -1,8 +1,8 @@
-import Footer from "./Footer";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import Footer from './Footer';
+import Header from './Header';
+import Sidebar from './Sidebar';
 
-export default function Layout({ children }: {children: JSX.Element}) {
+export default function Layout({ children }: { children: JSX.Element }) {
   return (
     <>
       <Header />

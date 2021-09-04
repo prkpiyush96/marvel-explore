@@ -26,7 +26,11 @@ function App() {
           </Route>
           <QueryClientProvider client={queryClient}>
             {Routes.map((route) => (
-              <Route key={route.name} path={route.path} component={route.component} />
+              <Route
+                key={route.name}
+                path={route.path}
+                component={route.component}
+              />
             ))}
           </QueryClientProvider>
         </Switch>
