@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/marvel-explore/static/css/main.2969d98c.chunk.css",
+    "main.js": "/marvel-explore/static/js/main.247056dd.chunk.js",
+    "main.js.map": "/marvel-explore/static/js/main.247056dd.chunk.js.map",
+    "runtime-main.js": "/marvel-explore/static/js/runtime-main.1a0e132d.js",
+    "runtime-main.js.map": "/marvel-explore/static/js/runtime-main.1a0e132d.js.map",
+    "static/js/2.b4c9cf12.chunk.js": "/marvel-explore/static/js/2.b4c9cf12.chunk.js",
+    "static/js/2.b4c9cf12.chunk.js.map": "/marvel-explore/static/js/2.b4c9cf12.chunk.js.map",
+    "static/js/3.a1c511d9.chunk.js": "/marvel-explore/static/js/3.a1c511d9.chunk.js",
+    "static/js/3.a1c511d9.chunk.js.map": "/marvel-explore/static/js/3.a1c511d9.chunk.js.map",
+    "index.html": "/marvel-explore/index.html",
+    "static/css/main.2969d98c.chunk.css.map": "/marvel-explore/static/css/main.2969d98c.chunk.css.map",
+    "static/js/2.b4c9cf12.chunk.js.LICENSE.txt": "/marvel-explore/static/js/2.b4c9cf12.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/marvel-explore/static/media/Marvel-Regular.bcdc5fa7.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1a0e132d.js",
+    "static/js/2.b4c9cf12.chunk.js",
+    "static/css/main.2969d98c.chunk.css",
+    "static/js/main.247056dd.chunk.js"
+  ]
+}
