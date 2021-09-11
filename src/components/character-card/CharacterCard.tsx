@@ -1,12 +1,12 @@
 import { ICharacterCardProps } from '.';
-import { standardImageVariants } from '../../utils/constants';
+import { landscapeImageVariants } from '../../utils/constants';
 
 export default function CharacterCard({ character }: ICharacterCardProps) {
   const imgSrc = `
-    ${character.thumbnail.path}/${standardImageVariants.large}.${character.thumbnail.extension}
+    ${character.thumbnail.path}/${landscapeImageVariants.medium}.${character.thumbnail.extension}
   `;
   return (
-    <div className="w-32">
+    <div>
       <img src={imgSrc} alt={character.name} />
       <h4>{character.name}</h4>
     </div>

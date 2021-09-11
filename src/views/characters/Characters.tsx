@@ -1,17 +1,19 @@
 import {
-  KeyboardEventHandler,
+  ChangeEventHandler,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
 import { useInfiniteQuery, useQueryClient } from 'react-query';
+import debounce from 'lodash.debounce';
 
 import { IGetCharacterResponse } from '.';
 import CharacterCard from '../../components/character-card';
+import Loader from '../../components/Loader';
 import { get } from '../../services/httpService';
 
-const limit = 32;
+const limit = 24;
 
 export default function Characters() {
   const queryClient = useQueryClient();
@@ -53,8 +55,13 @@ export default function Characters() {
     [fetchNextPage, hasNextPage],
   );
 
-  const handleSearch: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.code === 'Enter') setSearch(e.currentTarget.value);
+  const debouncedSearch = useCallback(
+    debounce((nextValue) => setSearch(nextValue), 300),
+    [],
+  );
+
+  const handleSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
+    debouncedSearch(e.target.value);
   };
 
   useEffect(() => {
@@ -86,11 +93,11 @@ export default function Characters() {
         <>
           <input
             type="search"
-            onKeyPress={handleSearch}
-            placeholder="press enter to search"
+            onChange={handleSearch}
+            placeholder="search"
             className="mx-8 my-2 float-right w-40 p-2 border border-black border-solid"
           />
-          <article className="m-8 flex flex-wrap gap-x-4 gap-y-4 clear-both">
+          <article className="m-8 flex flex-wrap gap-x-4 gap-y-4 clear-both grid grid-cols-4 md:grid-cols-6 auto-cols-auto">
             {data?.pages.map((page) => {
               return page.data.results.map((character, index) => {
                 return (
@@ -105,7 +112,7 @@ export default function Characters() {
         </>
       )}
       <div ref={loaderRef} style={{ textAlign: 'center' }}>
-        {hasNextPage ? 'Loading More Data...' : ''}
+        {hasNextPage ? <Loader /> : null}
       </div>
     </div>
   );
