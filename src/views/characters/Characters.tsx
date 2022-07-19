@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { useInfiniteQuery, useQueryClient } from 'react-query';
 import debounce from 'lodash.debounce';
+import { useHistory } from 'react-router-dom';
 
 import { IGetCharacterResponse } from '.';
 import CharacterCard from '../../components/character-card';
@@ -19,6 +20,7 @@ export default function Characters() {
   const queryClient = useQueryClient();
   const loaderRef = useRef<HTMLDivElement>(null);
   const [search, setSearch] = useState('');
+  const history = useHistory();
 
   const getCharacters = useCallback(
     ({ pageParam = 0 }) =>
@@ -104,6 +106,7 @@ export default function Characters() {
                   <CharacterCard
                     key={`${character.id} + ${index}`}
                     character={character}
+                    onClick={id => history.push(`characters/${id}`)}
                   />
                 );
               });

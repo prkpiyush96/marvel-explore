@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { CloseIcon, MenuIcon } from '../assets/icons';
 import Footer from './Footer';
 import Header from './Header';
 

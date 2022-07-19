@@ -30,6 +30,7 @@ function App() {
                 key={route.name}
                 path={route.path}
                 component={route.component}
+                exact={route.exact}
               />
             ))}
           </QueryClientProvider>

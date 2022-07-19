@@ -15,6 +15,7 @@ export interface IGetCharacterResponse {
   etag: string;
   status: string;
 }
+
 export interface ICharacter {
   id: number;
   name: string;
