@@ -27,4 +27,5 @@ export const landscapeImageVariants = {
 
 export const APP_ROUTES = {
   characters: '/characters',
+  details: '/characters/:id'
 };

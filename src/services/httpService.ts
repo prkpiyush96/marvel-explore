@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const get = async (url: string, paramsObj: Object) => {
+const get = async (url: string, paramsObj?: Object) => {
   try {
     const res = await axios.get(url, {
       params: {
