@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom"
 
@@ -15,6 +16,10 @@ export default function Details() {
   const { data, error, isLoading } = useQuery<IGetCharacterResponse>(`getCharacterDetails_${id}`, getCharactedDetails);
 
   const characterData = data?.data.results[0];
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
 
   if (isLoading || !characterData) return <Loader />;
 
