@@ -1,6 +1,8 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom"
+
 import CharacterCard from "../../components/character-card";
+import CharacterDetails from "../../components/character-details";
 import Loader from "../../components/Loader";
 import { get } from "../../services/httpService";
 import { IGetCharacterResponse } from "../characters";
@@ -17,10 +19,13 @@ export default function Details() {
   if (isLoading || !characterData) return <Loader />;
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 mb-4 px-32">
       <CharacterCard
         character={characterData}
         isDetails
+      />
+      <CharacterDetails 
+        character={characterData}
       />
     </div>
   )

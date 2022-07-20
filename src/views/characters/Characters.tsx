@@ -106,7 +106,7 @@ export default function Characters() {
                   <CharacterCard
                     key={`${character.id} + ${index}`}
                     character={character}
-                    onClick={id => history.push(`characters/${id}`)}
+                    onClick={id => history.replace(`characters/${id}`)}
                   />
                 );
               });
