@@ -3,7 +3,7 @@ import { ICharacterDetailsProps, IDetailListProps } from '.';
 const DetailList = ({ title, items }: IDetailListProps) => {
   return (
     <div
-      className="flex-1 mx-2"
+      className="flex-1 mx-2 mb-4"
       style={{
         backgroundImage:
           'url(https://hindutrend.com/wp-content/uploads/2020/01/Avengers-tower-HD-Wallpaper.jpg)',
@@ -53,7 +53,7 @@ export default function CharacterDetails({
   ];
 
   return (
-    <div className="flex justify-between align-center mt-8">
+    <div className="flex flex-col md:flex-row justify-between align-center mt-8">
       {listData.map((item) => (
         <DetailList title={item.title} items={item.data} />
       ))}

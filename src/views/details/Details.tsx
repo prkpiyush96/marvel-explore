@@ -19,7 +19,7 @@ export default function Details() {
   if (isLoading || !characterData) return <Loader />;
 
   return (
-    <div className="mt-4 mb-4 px-32">
+    <div className="mt-4 mb-4 px-4 md:px-8 lg:px-24">
       <CharacterCard
         character={characterData}
         isDetails

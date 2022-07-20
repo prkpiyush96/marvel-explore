@@ -12,7 +12,7 @@ export default function CharacterCard({ character, onClick, isDetails }: ICharac
       onClick={() => onClick && onClick(character.id)}
     >
       <img src={imgSrc} alt={character.name} />
-      <h4>{character.name}</h4>
+      <h4 className='text-ellipsis whitespace-nowrap w-full overflow-hidden'>{character.name}</h4>
       {isDetails && <h3 className='text-center font-bold text-lg'>{character.description}</h3>}
     </div>
   );
