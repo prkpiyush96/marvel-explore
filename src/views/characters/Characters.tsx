@@ -99,14 +99,14 @@ export default function Characters() {
             placeholder="search"
             className="mx-8 my-2 float-right w-40 p-2 border border-black border-solid"
           />
-          <article className="m-8 flex flex-wrap gap-x-4 gap-y-4 clear-both grid grid-cols-4 md:grid-cols-6 auto-cols-auto">
+          <article className="m-8 flex flex-wrap gap-x-4 gap-y-4 clear-both grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 auto-cols-auto">
             {data?.pages.map((page) => {
               return page.data.results.map((character, index) => {
                 return (
                   <CharacterCard
                     key={`${character.id} + ${index}`}
                     character={character}
-                    onClick={id => history.push(`characters/${id}`)}
+                    onClick={id => history.replace(`characters/${id}`)}
                   />
                 );
               });

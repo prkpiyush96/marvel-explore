@@ -24,10 +24,10 @@ export interface ICharacter {
   resourceURI: string;
   urls: Array<IUrl>;
   thumbnail: IThumbnail;
-  comics: Array<IResourceObject>;
-  stories: Array<IResourceObject>;
-  events: Array<IResourceObject>;
-  series: Array<IResourceObject>;
+  comics: IResourceObject;
+  stories: IResourceObject;
+  events: IResourceObject;
+  series: IResourceObject;
 }
 
 export { default } from './Characters';

@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom"
+
 import CharacterCard from "../../components/character-card";
+import CharacterDetails from "../../components/character-details";
 import Loader from "../../components/Loader";
 import { get } from "../../services/httpService";
 import { IGetCharacterResponse } from "../characters";
@@ -14,13 +17,20 @@ export default function Details() {
 
   const characterData = data?.data.results[0];
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
+
   if (isLoading || !characterData) return <Loader />;
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 mb-4 px-4 md:px-8 lg:px-24">
       <CharacterCard
         character={characterData}
         isDetails
+      />
+      <CharacterDetails 
+        character={characterData}
       />
     </div>
   )
