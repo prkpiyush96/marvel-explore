@@ -1,4 +1,4 @@
-import { IResourceObject } from '../../types/common';
+import { IResourceObject, IUrl } from '../../types/common';
 import { ICharacter } from '../../views/characters';
 
 export interface ICharacterDetailsProps {

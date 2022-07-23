@@ -13,8 +13,7 @@ import { IGetCharacterResponse } from '.';
 import CharacterCard from '../../components/character-card';
 import Loader from '../../components/Loader';
 import { get } from '../../services/httpService';
-
-const limit = 24;
+import { CHARACTERS_PAGE_LIMIT } from '../../utils/constants';
 
 export default function Characters() {
   const queryClient = useQueryClient();
@@ -26,7 +25,7 @@ export default function Characters() {
     ({ pageParam = 0 }) =>
       get('https://gateway.marvel.com/v1/public/characters', {
         offset: pageParam,
-        limit: limit,
+        limit: CHARACTERS_PAGE_LIMIT,
         nameStartsWith: search ? search : undefined,
       }),
     [search],
@@ -41,7 +40,7 @@ export default function Characters() {
         ) {
           return undefined;
         }
-        return lastPage.data.offset + limit;
+        return lastPage.data.offset + CHARACTERS_PAGE_LIMIT;
       },
     });
 
@@ -79,8 +78,8 @@ export default function Characters() {
   useEffect(() => {
     fetchNextPage({ pageParam: 0 }).then((res) => {
       queryClient.setQueryData('getCharacters', () => ({
-        pages: [res.data?.pages[res.data?.pages.length - 1]],
-        pageParams: res.data?.pageParams[res.data?.pageParams.length - 1],
+        pages: [res.data?.pages[res.data?.pages?.length - 1]],
+        pageParams: res.data?.pageParams[res.data?.pageParams?.length - 1],
       }));
     });
   }, [fetchNextPage, queryClient, search]);
@@ -106,7 +105,7 @@ export default function Characters() {
                   <CharacterCard
                     key={`${character.id} + ${index}`}
                     character={character}
-                    onClick={id => history.replace(`characters/${id}`)}
+                    onClick={id => history.push(`characters/${id}`)}
                   />
                 );
               });
