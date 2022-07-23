@@ -29,3 +29,6 @@ export const APP_ROUTES = {
   characters: '/characters',
   details: '/characters/:id'
 };
+
+export const CHARACTERS_PAGE_LIMIT = 24;
+export const COMICS_PAGE_LIMIT = 5;
