@@ -85,7 +85,7 @@ export default function CharacterDetails({
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
     >
       <h3 className="font-bold text-2xl text-center mb-4 text-primaryRed">
-        Comics
+        Comics ({data?.pages[0]?.data.total})
       </h3>
       {data?.pages.map((page) => {
         return page.data.results.map((comic) => {
@@ -93,7 +93,7 @@ export default function CharacterDetails({
     ${comic.thumbnail.path}/${standardImageVariants.fantastic}.${comic.thumbnail.extension}
   `;
           return (
-            <div key={comic.id} className="p-2 flex flex-col md:flex-row">
+            <div key={comic.id} className="p-2 mb-4 flex flex-col md:flex-row">
               <img src={imgSrc} alt={comic.title} />
               <div className="flex flex-col justify-center p-2">
                 <h3 className="text-black text-2xl mb-2">{comic.title}</h3>
