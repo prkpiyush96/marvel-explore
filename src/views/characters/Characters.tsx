@@ -45,7 +45,7 @@ export default function Characters() {
     });
 
   const handleObserver = useCallback(
-    (entries) => {
+    (entries: any[]) => {
       if (hasNextPage) {
         const target = entries[0];
         if (target.isIntersecting) {
