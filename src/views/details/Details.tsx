@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
 import CharacterCard from '../../components/character-card';
@@ -15,7 +15,7 @@ export default function Details() {
     get(`https://gateway.marvel.com/v1/public/characters/${id}`);
 
   const { data, error, isLoading } = useQuery<IGetCharacterResponse>(
-    `getCharacterDetails_${id}`,
+    ['getCharacterDetails', id],
     getCharactedDetails,
   );
 

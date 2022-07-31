@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useInfiniteQuery, useQueryClient } from 'react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { ICharacterDetailsProps } from '.';
 import { get } from '../../services/httpService';
 import {
@@ -12,7 +12,6 @@ import Loader from '../Loader';
 export default function CharacterDetails({
   character,
 }: ICharacterDetailsProps) {
-  const queryClient = useQueryClient();
   const loaderRef = useRef<HTMLDivElement>(null);
 
   const getCharacterComics = useCallback(
@@ -29,7 +28,7 @@ export default function CharacterDetails({
 
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery<IGetCharacterComicsResponse>(
-      'getCharacterComics',
+      ['getCharacterComics'],
       getCharacterComics,
       {
         getNextPageParam: (lastPage) => {
@@ -65,15 +64,6 @@ export default function CharacterDetails({
     const observer = new IntersectionObserver(handleObserver, option);
     if (loaderRef.current) observer.observe(loaderRef.current);
   }, [handleObserver]);
-
-  useEffect(() => {
-    fetchNextPage({ pageParam: 0 }).then((res) => {
-      queryClient.setQueryData('getCharacterComics', () => ({
-        pages: [res.data?.pages[res.data?.pages?.length - 1]],
-        pageParams: res.data?.pageParams[res.data?.pageParams?.length - 1],
-      }));
-    });
-  }, [fetchNextPage, queryClient]);
 
   return error ? (
     <div> {JSON.stringify(error)}</div>

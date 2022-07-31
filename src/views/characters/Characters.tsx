@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useInfiniteQuery, useQueryClient } from 'react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import debounce from 'lodash.debounce';
 import { useHistory } from 'react-router-dom';
 
@@ -32,15 +32,15 @@ export default function Characters() {
   );
 
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
-    useInfiniteQuery<IGetCharacterResponse>('getCharacters', getCharacters, {
+    useInfiniteQuery<IGetCharacterResponse>(['getCharacters'], getCharacters, {
       getNextPageParam: (lastPage) => {
         if (
-          lastPage.data.offset > lastPage.data.total ||
-          lastPage.data.limit > lastPage.data.total
+          lastPage?.data.offset > lastPage?.data.total ||
+          lastPage?.data.limit > lastPage?.data.total
         ) {
           return undefined;
         }
-        return lastPage.data.offset + CHARACTERS_PAGE_LIMIT;
+        return (lastPage?.data.offset || 0) + CHARACTERS_PAGE_LIMIT;
       },
     });
 
@@ -77,12 +77,13 @@ export default function Characters() {
 
   useEffect(() => {
     fetchNextPage({ pageParam: 0 }).then((res) => {
-      queryClient.setQueryData('getCharacters', () => ({
-        pages: [res.data?.pages[res.data?.pages?.length - 1]],
-        pageParams: res.data?.pageParams[res.data?.pageParams?.length - 1],
-      }));
+      if (res.data) {
+        queryClient.setQueryData(['getCharacters'], () => ({
+          pages: [res.data.pages[res.data.pages?.length - 1]],
+        }));
+      }
     });
-  }, [fetchNextPage, queryClient, search]);
+  }, [search]);
 
   return (
     <div>
@@ -100,7 +101,7 @@ export default function Characters() {
           />
           <article className="m-8 flex flex-wrap gap-x-4 gap-y-4 clear-both grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 auto-cols-auto">
             {data?.pages.map((page) => {
-              return page.data.results.map((character, index) => {
+              return page?.data.results.map((character, index) => {
                 return (
                   <CharacterCard
                     key={`${character.id} + ${index}`}
