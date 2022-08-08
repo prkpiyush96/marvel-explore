@@ -28,7 +28,7 @@ export default function CharacterDetails({
 
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery<IGetCharacterComicsResponse>(
-      ['getCharacterComics'],
+      ['getCharacterComics', character.id],
       getCharacterComics,
       {
         getNextPageParam: (lastPage) => {
