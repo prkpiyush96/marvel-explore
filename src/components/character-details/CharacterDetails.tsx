@@ -26,7 +26,7 @@ export default function CharacterDetails({
     [],
   );
 
-  const { data, error, isLoading, fetchNextPage, hasNextPage } =
+  const { data, error, isLoading, fetchNextPage, hasNextPage, isFetching } =
     useInfiniteQuery<IGetCharacterComicsResponse>(
       ['getCharacterComics', character.id],
       getCharacterComics,
@@ -67,7 +67,7 @@ export default function CharacterDetails({
 
   return error ? (
     <div> {JSON.stringify(error)}</div>
-  ) : isLoading ? (
+  ) : (isLoading || isFetching) ? (
     <div>Loading Data...</div>
   ) : (
     <div
